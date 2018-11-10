@@ -15,6 +15,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     let sceneLocationView = SceneLocationView()
     let mapView = MKMapView()
+    let searchBar = UISearchBar()
     
     var updateUserLocationTimer: Timer?
     var updatePlaceTimer : Timer?
@@ -22,13 +23,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         mapView.delegate = self
         mapView.showsUserLocation = true
         
-
+//        searchBar.
+        
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
+        view.addSubview(searchBar)
         
         var list : Array<LocationAnnotationNode> = Array()
         list.append(MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405).getNode())
@@ -53,6 +55,13 @@ class ViewController: UIViewController, MKMapViewDelegate {
             y: self.view.frame.size.height / 4 * 3,
             width: self.view.frame.size.width / 2,
             height: self.view.frame.size.height / 2
+        )
+        
+        searchBar.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height / 12
         )
     }
     
