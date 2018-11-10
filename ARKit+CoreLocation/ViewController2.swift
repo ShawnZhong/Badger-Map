@@ -91,4 +91,7 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         tableView.isHidden = false;
     }
     
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        
+    }
 }
