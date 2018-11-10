@@ -10,6 +10,84 @@ import SceneKit
 import UIKit
 import MapKit
 
+@available(iOS 11.0, *)
+class ViewController: UIViewController, MKMapViewDelegate {
+    
+    let sceneLocationView = SceneLocationView()
+    let mapView = MKMapView()
+    let searchBar = UISearchController(searchResultsController: nil)
+    
+    var updateUserLocationTimer: Timer?
+    var updatePlaceTimer : Timer?
+    
+    var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.alpha = 0.8
+        
+        view.addSubview(sceneLocationView)
+        view.addSubview(mapView)
+        view.addSubview(searchBar.searchBar)
+        
+        var list : Array<LocationAnnotationNode> = Array()
+        list.append(MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405).getNode())
+        list.append(MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900).getNode())
+        for mapLabel in list {
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
+        }
+        
+        searchBar.obscuresBackgroundDuringPresentation = false;
+        definesPresentationContext = true;
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        sceneLocationView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height
+        )
+        
+        mapView.frame = CGRect(
+            x: 0,
+            y: self.view.frame.size.height / 2,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height / 2
+        )
+        
+        searchBar.searchBar.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height/12
+        )
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sceneLocationView.run()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sceneLocationView.pause()
+    }
+}
+
+extension DispatchQueue {
+    func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
+        self.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(timeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: execute)
+    }
+}
+
 class MapLabel{
     let name: NSString
     let latitude:CLLocationDegrees

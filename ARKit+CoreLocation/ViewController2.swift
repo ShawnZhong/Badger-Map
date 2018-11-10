@@ -19,6 +19,8 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
+    
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
     
@@ -53,9 +55,12 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
         }
         
+        tableView.isHidden = true;
+        
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(searchBar)
+        view.addSubview(tableView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,4 +89,9 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         print(searchBar.text!)
         searchBar.endEditing(true)
     }
+    
+    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
+        tableView.isHidden = false;
+    }
+    
 }
