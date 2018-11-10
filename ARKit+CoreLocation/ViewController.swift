@@ -31,11 +31,10 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     ///Whether to display some debugging data
     ///This currently displays the coordinate of the best location estimate
     ///The initial value is respected
-//    var displayDebugging = false
     
- //  var infoLabel = UILabel()
+   var infoLabel = UILabel()
     
-//    var updateInfoLabelTimer: Timer?
+    var updateInfoLabelTimer: Timer?
     
     var updatePlaceTimer : Timer?
     
@@ -76,9 +75,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         //sceneLocationView.showAxesNode = false
         sceneLocationView.locationDelegate = self
         
-//        if displayDebugging {
-//            sceneLocationView.showFeaturePoints = true
-//        }
 
         view.addSubview(sceneLocationView)
 //        let rect = CGRect(x: 10, y: 10, width: 100, height: 100)
@@ -123,15 +119,15 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             y: 0,
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
-//
-//        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
-//
-//        if showMapView {
-//            infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
-//        } else {
-//            infoLabel.frame.origin.y = self.view.frame.size.height - infoLabel.frame.size.height
-//        }
-//
+
+        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
+
+        if showMapView {
+            infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
+        } else {
+            infoLabel.frame.origin.y = self.view.frame.size.height - infoLabel.frame.size.height
+        }
+        
         mapView.frame = CGRect(
             x: 0,
             y: self.view.frame.size.height / 2,
@@ -140,16 +136,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     }
     
     @objc func updatePlace() {
-        let image = UIImage(named: "pin")!
-        
         let pinCoordinate = CLLocationCoordinate2D(latitude: 43.073676, longitude: -89.400900)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
-        let annotationNode = LocationAnnotationNode(location: pinLocation, image: textToImage(drawText: "Chadb", rating: "0", price_level: 0, size: 100))
+        let annotationNode = LocationAnnotationNode(location: pinLocation, image: textToImage(drawText: "Chadb", size: 75))
         
         self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
     }
     
-    func textToImage(drawText name: NSString, rating: NSString, price_level: NSInteger?, size: CGFloat) -> UIImage {
+    func textToImage(drawText name: NSString, size: CGFloat) -> UIImage {
         
         //text attributes
         let font=UIFont(name: "Courier-Bold", size: size)!
@@ -158,8 +152,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let text_color=UIColor(white: CGFloat(0), alpha: CGFloat(1))
         let attributes=[NSAttributedString.Key.font:font, NSAttributedString.Key.paragraphStyle:text_style, NSAttributedString.Key.foregroundColor:text_color]
         
-        
-        let size = CGSize(width: CGFloat(size * CGFloat(name.length)*0.75), height: font.lineHeight*4)
+        let size = CGSize(width: CGFloat(size * CGFloat(name.length)*0.75), height: font.lineHeight*2)
         //draw image first
         UIGraphicsBeginImageContext(size)
         
@@ -182,20 +175,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let text_rect_name=CGRect(x: 0, y: (size.height-text_h)/4, width: size.width, height: text_h)
         
         name.draw(in: text_rect_name.integral, withAttributes: attributes)
-        
-        var rating_output : NSString = "Rating: "+(rating as String)+" Price: " as NSString
-        if price_level != 0 {
-            for _ in 1...price_level! {
-                rating_output = (rating_output as String) + "$" as NSString
-            }
-        }
-        else {
-            rating_output = (rating_output as String) + "Unavailable" as NSString
-        }
-        
-        let text_rect_rate=CGRect(x: 0, y: (size.height-text_h)*3/4, width: size.width, height: text_h)
-        rating_output.draw(in: text_rect_rate.integral, withAttributes: attributes)
-        
         
         let result=UIGraphicsGetImageFromCurrentImageContext()
         
@@ -237,78 +216,32 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                         self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
                     })
                 }
-                
-//                if self.displayDebugging {
-//                    let bestLocationEstimate = self.sceneLocationView.bestLocationEstimate()
-//
-//                    if bestLocationEstimate != nil {
-//                        if self.locationEstimateAnnotation == nil {
-//                            self.locationEstimateAnnotation = MKPointAnnotation()
-//                            self.mapView.addAnnotation(self.locationEstimateAnnotation!)
-//                        }
-//
-//                        self.locationEstimateAnnotation!.coordinate = bestLocationEstimate!.location.coordinate
-//                    } else {
-//                        if self.locationEstimateAnnotation != nil {
-//                            self.mapView.removeAnnotation(self.locationEstimateAnnotation!)
-//                            self.locationEstimateAnnotation = nil
-//                        }
-//                    }
-//                }
             }
         }
     }
     
-//    @objc func updateInfoLabel() {
-//        if let position = sceneLocationView.currentScenePosition() {
-//            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z))\n"
-//        }
-//
-//        if let eulerAngles = sceneLocationView.currentEulerAngles() {
-//            infoLabel.text!.append("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
-//        }
-//
-//        if let heading = sceneLocationView.locationManager.heading,
-//            let accuracy = sceneLocationView.locationManager.headingAccuracy {
-//            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
-//        }
-//
-//        let date = Date()
-//        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
-//
-//        if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
-//            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second)):\(String(format: "%03d", nanosecond / 1000000))")
-//        }
-//    }
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesBegan(touches, with: event)
-//
-//        if let touch = touches.first {
-//            if touch.view != nil {
-//                if (mapView == touch.view! ||
-//                    mapView.recursiveSubviews().contains(touch.view!)) {
-//                    centerMapOnUserLocation = false
-//                } else {
-//
-//                    let location = touch.location(in: self.view)
-//
-//                    if location.x <= 40 && adjustNorthByTappingSidesOfScreen {
-//                        print("left side of the screen")
-//                        sceneLocationView.moveSceneHeadingAntiClockwise()
-//                    } else if location.x >= view.frame.size.width - 40 && adjustNorthByTappingSidesOfScreen {
-//                        print("right side of the screen")
-//                        sceneLocationView.moveSceneHeadingClockwise()
-//                    } else {
-//                        let image = UIImage(named: "pin")!
-//                        let annotationNode = LocationAnnotationNode(location: nil, image: image)
-//                        annotationNode.scaleRelativeToDistance = true
-//                        sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    @objc func updateInfoLabel() {
+        if let position = sceneLocationView.currentScenePosition() {
+            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z))\n"
+        }
+
+        if let eulerAngles = sceneLocationView.currentEulerAngles() {
+            infoLabel.text!.append("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
+        }
+
+        if let heading = sceneLocationView.locationManager.heading,
+            let accuracy = sceneLocationView.locationManager.headingAccuracy {
+            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
+        }
+
+        let date = Date()
+        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
+
+        if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
+            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second)):\(String(format: "%03d", nanosecond / 1000000))")
+        }
+    }
+
     
     //MARK: MKMapViewDelegate
     
