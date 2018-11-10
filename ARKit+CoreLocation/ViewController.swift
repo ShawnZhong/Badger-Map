@@ -19,17 +19,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
     var updateUserLocationTimer: Timer?
     var updatePlaceTimer : Timer?
     
-    var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         mapView.delegate = self
         mapView.showsUserLocation = true
-        mapView.alpha = 0.8
         
 
         view.addSubview(sceneLocationView)
@@ -54,9 +49,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         )
         
         mapView.frame = CGRect(
-            x: 0,
-            y: self.view.frame.size.height / 2,
-            width: self.view.frame.size.width,
+            x: self.view.frame.size.width / 2,
+            y: self.view.frame.size.height / 4 * 3,
+            width: self.view.frame.size.width / 2,
             height: self.view.frame.size.height / 2
         )
     }
@@ -72,15 +67,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         sceneLocationView.pause()
     }
 }
-
-extension DispatchQueue {
-    func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
-        self.asyncAfter(
-            deadline: DispatchTime.now() + Double(Int64(timeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: execute)
-    }
-}
-
-
 
 class MapLabel{
     let name: NSString
