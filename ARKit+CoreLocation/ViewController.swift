@@ -14,14 +14,11 @@ import Alamofire
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
-    let sceneLocationView = SceneLocationView()
     
+    let sceneLocationView = SceneLocationView()
     let mapView = MKMapView()
     
     var updateUserLocationTimer: Timer?
-    
-    var showMapView: Bool = true
-    
     var updatePlaceTimer : Timer?
     
     var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
@@ -34,38 +31,25 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             target: self,
             selector: #selector(ViewController.updatePlace),
             userInfo: nil,
-            repeats: true)
+            repeats: true
+        )
+        
+        updateUserLocationTimer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(ViewController.updateUserLocation),
+            userInfo: nil,
+            repeats: true
+        )
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.alpha = 0.8
+        
         sceneLocationView.locationDelegate = self
 
         view.addSubview(sceneLocationView)
-        
-        if showMapView {
-            mapView.delegate = self
-            mapView.showsUserLocation = true
-            mapView.alpha = 0.8
-            view.addSubview(mapView)
-
-            updateUserLocationTimer = Timer.scheduledTimer(
-                timeInterval: 0.5,
-                target: self,
-                selector: #selector(ViewController.updateUserLocation),
-                userInfo: nil,
-                repeats: true)
-        }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        DDLogDebug("run")
-        sceneLocationView.run()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        DDLogDebug("pause")
-        sceneLocationView.pause()
+        view.addSubview(mapView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,16 +68,30 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             height: self.view.frame.size.height / 2)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DDLogDebug("run")
+        sceneLocationView.run()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        DDLogDebug("pause")
+        sceneLocationView.pause()
+    }
+    
+   
     @objc func updatePlace() {
         var list : Array<LocationAnnotationNode> = Array()
+        
         list.append(MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900).getNode())
         
         for mapLabel in list {
-             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
         }
     }
 
-    
     
     @objc func updateUserLocation() {
         if let currentLocation = sceneLocationView.currentLocation() {
@@ -119,7 +117,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
 
     
     //MARK: SceneLocationViewDelegate
-    
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
         self.currLocation = location.coordinate
     }
@@ -152,7 +149,6 @@ class MapLabel{
         self.latitude = latitude;
         self.longitude = longitude;
     }
-    
     
     
     func getNode() -> LocationAnnotationNode{
