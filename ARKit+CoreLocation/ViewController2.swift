@@ -12,6 +12,10 @@ import MapKit
 
 @available(iOS 11.0, *)
 class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
+    var list: Array<MapLabel> = [
+        MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405),
+        MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900)
+    ]
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -45,16 +49,13 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         
         searchBar.delegate = self
         
+        for mapLabel in list {
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
+        }
+        
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(searchBar)
-        
-        var list : Array<LocationAnnotationNode> = Array()
-        list.append(MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405).getNode())
-        list.append(MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900).getNode())
-        for mapLabel in list {
-            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -81,5 +82,6 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print(searchBar.text!)
+        searchBar.endEditing(true)
     }
 }
