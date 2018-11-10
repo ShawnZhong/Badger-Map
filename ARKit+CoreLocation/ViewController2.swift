@@ -87,11 +87,14 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print(searchBar.text!)
+        tableView.isHidden = true
         searchBar.endEditing(true)
+        searchBar.searchBarStyle = UISearchBar.Style.minimal
     }
     
     public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
-        tableView.isHidden = false;
+        tableView.isHidden = false
+        searchBar.searchBarStyle = UISearchBar.Style.default
     }
     
 }
