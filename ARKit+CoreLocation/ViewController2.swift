@@ -13,6 +13,7 @@ import MapKit
 @available(iOS 11.0, *)
 class ViewController2: UIViewController, MKMapViewDelegate {
 
+    //    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     let sceneLocationView = SceneLocationView()
@@ -23,11 +24,7 @@ class ViewController2: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         mapView.delegate = self
-        mapView.showsUserLocation = true
-        mapView.alpha = 0.8
-        
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
@@ -50,13 +47,6 @@ class ViewController2: UIViewController, MKMapViewDelegate {
             width: self.view.frame.size.width,
             height: self.view.frame.size.height
         )
-        
-//        mapView.frame = CGRect(
-//            x: 0,
-//            y: self.view.frame.size.height / 2,
-//            width: self.view.frame.size.width,
-//            height: self.view.frame.size.height / 2
-//        )
     }
     
     
