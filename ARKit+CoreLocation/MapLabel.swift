@@ -1,13 +1,13 @@
 //
-//  ViewController.swift
+//  MapLabel.swift
 //  ARKit+CoreLocation
 //
-//  Created by Andrew Hart on 02/07/2017.
-//  Copyright © 2017 Project Dent. All rights reserved.
+//  Created by Shawn Zhong on 11/10/18.
+//  Copyright © 2018 Project Dent. All rights reserved.
 //
 
+import SceneKit
 import UIKit
-import SceneKit 
 import MapKit
 
 @available(iOS 11.0, *)
@@ -87,8 +87,6 @@ extension DispatchQueue {
             deadline: DispatchTime.now() + Double(Int64(timeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: execute)
     }
 }
-
-
 
 class MapLabel{
     let name: NSString
@@ -173,6 +171,6 @@ class MapLabel{
         
         return newImage!
     }
-
+    
     
 }
