@@ -96,5 +96,4 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         tableView.isHidden = false
         searchBar.searchBarStyle = UISearchBar.Style.default
     }
-    
 }
