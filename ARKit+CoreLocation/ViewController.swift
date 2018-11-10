@@ -139,21 +139,67 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             height: self.view.frame.size.height / 2)
     }
     
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Release any cached data, images, etc that aren't in use.
-//    }
-    
     @objc func updatePlace() {
-        print("1234")
-        
         let image = UIImage(named: "pin")!
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: 43.073676, longitude: -89.400900)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
-        let annotationNode = LocationAnnotationNode(location: pinLocation, image: image)
+        let annotationNode = LocationAnnotationNode(location: pinLocation, image: textToImage(drawText: "Chadb", rating: "0", price_level: 0, size: 100))
         
         self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
+    }
+    
+    func textToImage(drawText name: NSString, rating: NSString, price_level: NSInteger?, size: CGFloat) -> UIImage {
+        
+        //text attributes
+        let font=UIFont(name: "Courier-Bold", size: size)!
+        let text_style=NSMutableParagraphStyle()
+        text_style.alignment=NSTextAlignment.center
+        let text_color=UIColor(white: CGFloat(0), alpha: CGFloat(1))
+        let attributes=[NSAttributedString.Key.font:font, NSAttributedString.Key.paragraphStyle:text_style, NSAttributedString.Key.foregroundColor:text_color]
+        
+        
+        let size = CGSize(width: CGFloat(size * CGFloat(name.length)*0.75), height: font.lineHeight*4)
+        //draw image first
+        UIGraphicsBeginImageContext(size)
+        
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        ctx.setFillColor(gray:1, alpha: 1)
+        
+        
+        ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
+        ctx.closePath()
+        ctx.fillPath()
+        ctx.setStrokeColor(red: 0, green: 0, blue: 0, alpha: 1)
+        ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
+        ctx.closePath()
+        ctx.strokePath()
+        
+        //vertically center (depending on font)
+        let text_h=font.lineHeight
+        
+        let text_rect_name=CGRect(x: 0, y: (size.height-text_h)/4, width: size.width, height: text_h)
+        
+        name.draw(in: text_rect_name.integral, withAttributes: attributes)
+        
+        var rating_output : NSString = "Rating: "+(rating as String)+" Price: " as NSString
+        if price_level != 0 {
+            for _ in 1...price_level! {
+                rating_output = (rating_output as String) + "$" as NSString
+            }
+        }
+        else {
+            rating_output = (rating_output as String) + "Unavailable" as NSString
+        }
+        
+        let text_rect_rate=CGRect(x: 0, y: (size.height-text_h)*3/4, width: size.width, height: text_h)
+        rating_output.draw(in: text_rect_rate.integral, withAttributes: attributes)
+        
+        
+        let result=UIGraphicsGetImageFromCurrentImageContext()
+        
+        return result!
     }
     
     @objc func updateUserLocation() {
