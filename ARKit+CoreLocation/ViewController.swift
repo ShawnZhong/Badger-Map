@@ -148,8 +148,10 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         print("1234")
         
         let image = UIImage(named: "pin")!
-        let annotationNode = LocationAnnotationNode(location: CLLocation.init(latitude: 43.073676, longitude: -89.400900), image: image)
-        annotationNode.scaleRelativeToDistance = false
+        
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 43.073676, longitude: -89.400900)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
+        let annotationNode = LocationAnnotationNode(location: pinLocation, image: image)
         
         self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
     }

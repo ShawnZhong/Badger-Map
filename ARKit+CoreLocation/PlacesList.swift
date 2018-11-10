@@ -24,8 +24,8 @@ class PlacesList {
             }.resume()
     }
     
-    func textToImage(drawText name: NSString, rating: NSString, price_level: NSInteger?, /*img_url: String,*/ size: CGFloat) -> UIImage {
-        //print(rating)
+    func textToImage(drawText name: NSString, rating: NSString, price_level: NSInteger?, size: CGFloat) -> UIImage {
+        
         //text attributes
         let font=UIFont(name: "Courier-Bold", size: size)!
         let text_style=NSMutableParagraphStyle()
@@ -37,13 +37,9 @@ class PlacesList {
         let size = CGSize(width: CGFloat(size * CGFloat(name.length)*0.75), height: font.lineHeight*4)
         //draw image first
         UIGraphicsBeginImageContext(size)
-//        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-//        UIGraphicsBeginImageContextWithOptions(image.size, false, 0)
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         let ctx: CGContext = UIGraphicsGetCurrentContext()!
-        //ctx.saveGState()
-        //ctx.setAlpha(CGFloat(0.5))
         ctx.setFillColor(gray:1, alpha: 1)
         
         
