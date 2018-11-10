@@ -15,6 +15,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     let sceneLocationView = SceneLocationView()
     let mapView = MKMapView()
+    let searchBar = UISearchController(searchResultsController: nil)
     
     var updateUserLocationTimer: Timer?
     var updatePlaceTimer : Timer?
