@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController2" customModule="ARKit_CoreLocation" customModuleProvider="target">
             <connections>
                 <outlet property="mapView" destination="4P3-Yr-SW8" id="Iz2-ed-HjJ"/>
-                <outlet property="searchBar" destination="JCa-9V-Cm0" id="2R1-Cq-uBa"/>
+                <outlet property="searchDisplayController" destination="yje-oz-BfM" id="YBs-wD-CYD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,13 +28,21 @@
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P3-Yr-SW8">
-                    <rect key="frame" x="87" y="474" width="200" height="200"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="175" y="612" width="200" height="200"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </mapView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="FOV-Sn-O2C"/>
             <point key="canvasLocation" x="53.600000000000001" y="48.029556650246306"/>
         </view>
+        <searchDisplayController id="yje-oz-BfM">
+            <connections>
+                <outlet property="delegate" destination="-1" id="Us5-kK-tmh"/>
+                <outlet property="searchContentsController" destination="-1" id="1dA-V5-vT8"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="X0Q-JJ-69s"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="ud1-45-BPv"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>
