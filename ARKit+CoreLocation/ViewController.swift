@@ -9,11 +9,9 @@
 import UIKit
 import SceneKit 
 import MapKit
-import CocoaLumberjack
-import Alamofire
 
 @available(iOS 11.0, *)
-class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate {
     
     let sceneLocationView = SceneLocationView()
     let mapView = MKMapView()
@@ -23,33 +21,26 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updatePlaceTimer = Timer.scheduledTimer(
-            timeInterval: 1,
-            target: self,
-            selector: #selector(ViewController.updatePlace),
-            userInfo: nil,
-            repeats: true
-        )
-        
-        updateUserLocationTimer = Timer.scheduledTimer(
-            timeInterval: 1,
-            target: self,
-            selector: #selector(ViewController.updateUserLocation),
-            userInfo: nil,
-            repeats: true
-        )
         
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.alpha = 0.8
         
-        sceneLocationView.locationDelegate = self
 
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
+        
+        var list : Array<LocationAnnotationNode> = Array()
+        list.append(MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405).getNode())
+        list.append(MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900).getNode())
+        for mapLabel in list {
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,75 +50,27 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             x: 0,
             y: 0,
             width: self.view.frame.size.width,
-            height: self.view.frame.size.height)
+            height: self.view.frame.size.height
+        )
         
         mapView.frame = CGRect(
             x: 0,
             y: self.view.frame.size.height / 2,
             width: self.view.frame.size.width,
-            height: self.view.frame.size.height / 2)
+            height: self.view.frame.size.height / 2
+        )
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        DDLogDebug("run")
         sceneLocationView.run()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        DDLogDebug("pause")
         sceneLocationView.pause()
     }
-    
-   
-    @objc func updatePlace() {
-        var list : Array<LocationAnnotationNode> = Array()
-        
-        list.append(MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900).getNode())
-        
-        for mapLabel in list {
-            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
-        }
-    }
-
-    
-    @objc func updateUserLocation() {
-        if let currentLocation = sceneLocationView.currentLocation() {
-            DispatchQueue.main.async {
-                if let bestEstimate = self.sceneLocationView.bestLocationEstimate(),
-                    let position = self.sceneLocationView.currentScenePosition() {
-                    DDLogDebug("")
-                    DDLogDebug("Fetch current location")
-                    DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
-                    DDLogDebug("current position: \(position)")
-                    
-                    let translation = bestEstimate.translatedLocation(to: position)
-                    
-                    
-                    DDLogDebug("translation: \(translation)")
-                    DDLogDebug("translated location: \(currentLocation)")
-                    DDLogDebug("")
-                }
-            
-            }
-        }
-    }
-
-    
-    //MARK: SceneLocationViewDelegate
-    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
-        self.currLocation = location.coordinate
-    }
-    
-   func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) { }
-    
-    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {}
-    
-    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {}
-    
-    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {}
 }
 
 extension DispatchQueue {
@@ -143,24 +86,25 @@ class MapLabel{
     let name: NSString
     let latitude:CLLocationDegrees
     let longitude:CLLocationDegrees
+    let node: LocationAnnotationNode
     
     public init(name: NSString, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
         self.name =  name;
         self.latitude = latitude;
         self.longitude = longitude;
+        
+        let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
+        self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 750))
+        node.scaleRelativeToDistance = true
     }
     
     
     func getNode() -> LocationAnnotationNode{
-        let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
-        let annotationNode = LocationAnnotationNode(location: pinLocation, image: self.getImage(size: 750))
-        annotationNode.scaleRelativeToDistance = true
-        
-        return annotationNode
+        return self.node
     }
     
-    func getImage(size: CGFloat) -> UIImage {
+    static func getImage(name: NSString, size: CGFloat) -> UIImage {
         //text attributes
         let font=UIFont(name: "Courier-Bold", size: size)!
         let text_style=NSMutableParagraphStyle()
@@ -168,7 +112,7 @@ class MapLabel{
         let text_color=UIColor(white: CGFloat(0), alpha: CGFloat(1))
         let attributes=[NSAttributedString.Key.font:font, NSAttributedString.Key.paragraphStyle:text_style, NSAttributedString.Key.foregroundColor:text_color]
         
-        let size = CGSize(width: CGFloat(size * CGFloat(self.name.length)*0.75), height: font.lineHeight*2)
+        let size = CGSize(width: CGFloat(size * CGFloat(name.length)*0.75), height: font.lineHeight*2)
         //draw image first
         UIGraphicsBeginImageContext(size)
         
@@ -196,7 +140,7 @@ class MapLabel{
         return result!
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+    static func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
         let widthRatio  = targetSize.width  / size.width
