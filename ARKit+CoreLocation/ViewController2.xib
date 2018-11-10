@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController2" customModule="ARKit_CoreLocation" customModuleProvider="target">
             <connections>
                 <outlet property="mapView" destination="4P3-Yr-SW8" id="Iz2-ed-HjJ"/>
+                <outlet property="searchBar" destination="JCa-9V-Cm0" id="vCL-SA-avK"/>
                 <outlet property="searchDisplayController" destination="yje-oz-BfM" id="YBs-wD-CYD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
