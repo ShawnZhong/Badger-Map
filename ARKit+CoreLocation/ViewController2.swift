@@ -11,20 +11,39 @@ import SceneKit
 import MapKit
 
 @available(iOS 11.0, *)
-class ViewController2: UIViewController, MKMapViewDelegate {
+class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
-    //    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     let sceneLocationView = SceneLocationView()
-    
-    var updateUserLocationTimer: Timer?
-    var updatePlaceTimer : Timer?
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mapView.delegate = self
+        mapView.layer.cornerRadius = 25.0;
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // Check for Location Services
+        if (CLLocationManager.locationServicesEnabled()) {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        //Zoom to user location
+        if let userLocation = locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 200, longitudinalMeters: 200)
+            mapView.setRegion(viewRegion, animated: false)
+        }
+        
+        
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
+        }
+        
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
