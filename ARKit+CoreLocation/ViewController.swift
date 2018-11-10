@@ -22,15 +22,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     var updateUserLocationTimer: Timer?
     
-    ///Whether to show a map view
-    ///The initial value is respected
-    var showMapView: Bool = false
+    var showMapView: Bool = true
     
     var centerMapOnUserLocation: Bool = false
-    
-    ///Whether to display some debugging data
-    ///This currently displays the coordinate of the best location estimate
-    ///The initial value is respected
     
    var infoLabel = UILabel()
     
@@ -61,23 +55,23 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         
 
         view.addSubview(sceneLocationView)
-//        let rect = CGRect(x: 10, y: 10, width: 100, height: 100)
-//        let myView = UIView(frame: rect)
-//        view.addSubview(myView)
+        let rect = CGRect(x: 10, y: 10, width: 100, height: 100)
+        let myView = UIView(frame: rect)
+        view.addSubview(myView)
         
-//        if showMapView {
-//            mapView.delegate = self
-//            mapView.showsUserLocation = true
-//            mapView.alpha = 0.8
-//            view.addSubview(mapView)
-//
-//            updateUserLocationTimer = Timer.scheduledTimer(
-//                timeInterval: 0.5,
-//                target: self,
-//                selector: #selector(ViewController.updateUserLocation),
-//                userInfo: nil,
-//                repeats: true)
-//        }
+        if showMapView {
+            mapView.delegate = self
+            mapView.showsUserLocation = true
+            mapView.alpha = 0.8
+            view.addSubview(mapView)
+
+            updateUserLocationTimer = Timer.scheduledTimer(
+                timeInterval: 0.5,
+                target: self,
+                selector: #selector(ViewController.updateUserLocation),
+                userInfo: nil,
+                repeats: true)
+        }
         
     }
     
