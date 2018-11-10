@@ -17,21 +17,12 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     let sceneLocationView = SceneLocationView()
     
     let mapView = MKMapView()
-    var userAnnotation: MKPointAnnotation?
-    var locationEstimateAnnotation: MKPointAnnotation?
     
     var updateUserLocationTimer: Timer?
     
     var showMapView: Bool = true
     
-    var centerMapOnUserLocation: Bool = false
-    
-   var infoLabel = UILabel()
-    
-    var updateInfoLabelTimer: Timer?
-    
     var updatePlaceTimer : Timer?
-    
     
     var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
@@ -44,20 +35,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             selector: #selector(ViewController.updatePlace),
             userInfo: nil,
             repeats: true)
-        
-        //Set to true to display an arrow which points north.
-        //Checkout the comments in the property description and on the readme on this.
-//        sceneLocationView.orientToTrueNorth = false
-        
-//        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
-        //sceneLocationView.showAxesNode = false
         sceneLocationView.locationDelegate = self
-        
 
         view.addSubview(sceneLocationView)
-        let rect = CGRect(x: 10, y: 10, width: 100, height: 100)
-        let myView = UIView(frame: rect)
-        view.addSubview(myView)
         
         if showMapView {
             mapView.delegate = self
@@ -85,7 +65,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         super.viewWillDisappear(animated)
         
         DDLogDebug("pause")
-        // Pause the view's session
         sceneLocationView.pause()
     }
     
@@ -97,14 +76,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             y: 0,
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
-
-        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
-
-        if showMapView {
-            infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
-        } else {
-            infoLabel.frame.origin.y = self.view.frame.size.height - infoLabel.frame.size.height
-        }
         
         mapView.frame = CGRect(
             x: 0,
@@ -141,97 +112,25 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                     DDLogDebug("translated location: \(currentLocation)")
                     DDLogDebug("")
                 }
-                
-                if self.userAnnotation == nil {
-                    self.userAnnotation = MKPointAnnotation()
-                    self.mapView.addAnnotation(self.userAnnotation!)
-                }
-                
-                UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
-                    self.userAnnotation?.coordinate = currentLocation.coordinate
-                }, completion: nil)
             
-                if self.centerMapOnUserLocation {
-                    UIView.animate(withDuration: 0.45, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
-                        self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
-                    }, completion: {
-                        _ in
-                        self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
-                    })
-                }
             }
         }
     }
-    
-    @objc func updateInfoLabel() {
-        if let position = sceneLocationView.currentScenePosition() {
-            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z))\n"
-        }
 
-        if let eulerAngles = sceneLocationView.currentEulerAngles() {
-            infoLabel.text!.append("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
-        }
-
-        if let heading = sceneLocationView.locationManager.heading,
-            let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
-        }
-
-        let date = Date()
-        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
-
-        if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
-            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second)):\(String(format: "%03d", nanosecond / 1000000))")
-        }
-    }
-
-    
-    //MARK: MKMapViewDelegate
-    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation is MKUserLocation {
-//            return nil
-//        }
-//
-//        if let pointAnnotation = annotation as? MKPointAnnotation {
-//            let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
-//
-//            if pointAnnotation == self.userAnnotation {
-//                marker.displayPriority = .required
-//                marker.glyphImage = UIImage(named: "user")
-//            } else {
-//                marker.displayPriority = .required
-//                marker.markerTintColor = UIColor(hue: 0.267, saturation: 0.67, brightness: 0.77, alpha: 1.0)
-//                marker.glyphImage = UIImage(named: "compass")
-//            }
-//
-//            return marker
-//        }
-//
-//        return nil
-//    }
     
     //MARK: SceneLocationViewDelegate
     
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
-        //DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
         self.currLocation = location.coordinate
     }
     
-   func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
-//        DDLogDebug("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
-   }
+   func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) { }
     
-    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
-    }
+    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {}
     
-    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {
-        
-    }
+    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {}
     
-    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {
-        
-    }
+    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {}
 }
 
 extension DispatchQueue {
@@ -241,17 +140,6 @@ extension DispatchQueue {
     }
 }
 
-extension UIView {
-    func recursiveSubviews() -> [UIView] {
-        var recursiveSubviews = self.subviews
-        
-        for subview in subviews {
-            recursiveSubviews.append(contentsOf: subview.recursiveSubviews())
-        }
-        
-        return recursiveSubviews
-    }
-}
 
 
 class MapLabel{
