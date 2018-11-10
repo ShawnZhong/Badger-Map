@@ -96,8 +96,11 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         tableView.isHidden = false
         searchBar.searchBarStyle = UISearchBar.Style.default
     }
+<<<<<<< HEAD
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
     }
+=======
+>>>>>>> 5a5bfb06f3978fefc0afa44b4632639615d28585
 }
