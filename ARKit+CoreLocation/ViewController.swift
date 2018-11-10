@@ -145,23 +145,13 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
 //    }
     
     @objc func updatePlace() {
-        var urlStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyCTuPGgIixohdDF2qpJ5NyuvTa6A7GrTUo&type=restaurant&location="
-        urlStr += String(format:"%.15f", self.currLocation.latitude)+","
-        urlStr += String(format:"%.15f", self.currLocation.longitude)+"&radius=300"
-
-        //print(urlStr)
-        Alamofire.request(urlStr).responseJSON { response in
-            if let jsonObj = try! JSONSerialization.jsonObject(with: response.data!, options: []) as? [String: Any] {
-                //print(jsonObj)
-                if let places = jsonObj["results"] as? Array<[String : Any]> {
-                    self.placesList.updateList(new_list: places,view_controller: self)
-                    let add_list = self.placesList.getAddList()
-                    for item in add_list {
-                        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: item["node"] as! LocationNode)
-                    }
-                }
-            }
-        }
+        print("1234")
+        
+        let image = UIImage(named: "pin")!
+        let annotationNode = LocationAnnotationNode(location: CLLocation.init(latitude: 43.073676, longitude: -89.400900), image: image)
+        annotationNode.scaleRelativeToDistance = false
+        
+        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
     }
     
     @objc func updateUserLocation() {

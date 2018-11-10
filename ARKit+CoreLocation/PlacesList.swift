@@ -75,22 +75,6 @@ class PlacesList {
         let text_rect_rate=CGRect(x: 0, y: (size.height-text_h)*3/4, width: size.width, height: text_h)
         rating_output.draw(in: text_rect_rate.integral, withAttributes: attributes)
         
-//        let url = URL(string: img_url)!
-//        if let filePath = Bundle.main.path(forResource: "imageName", ofType: "jpg"), let image = UIImage(contentsOfFile: filePath) {
-//            imageView.contentMode = .scaleAspectFit
-//            imageView.image = image
-//        }
-//        getDataFromUrl(url: url) { data, response, error in
-//            guard let data = data, error == nil else { return }
-//            print(response?.suggestedFilename ?? url.lastPathComponent)
-//
-//            let ciImage = CIImage(image: UIImage(data: data)!)
-//
-//            let context = CIContext(options: nil)
-//            let cgImage : CGImage = context.createCGImage(inputImage, fromRect: inputImage.extent())
-//
-//            ctx.draw(CGImage, in: <#T##CGRect#>)
-//        }
         
         let result=UIGraphicsGetImageFromCurrentImageContext()
         
@@ -119,12 +103,10 @@ class PlacesList {
             urlStr += String(lat) + ","
             urlStr += String(lng)
             
-            //print(urlStr);
-            
             let dlat = view_controller.currLocation.latitude - lat
             let dlng  = view_controller.currLocation.longitude - lng
             let distance  = log(sqrt(dlat*dlat  + dlng*dlng)*10000)*10-5
-            //print(distance)
+            print(distance)
             
             Alamofire.request(urlStr).responseJSON { response in
                 let jsonObj = try! JSONSerialization.jsonObject(with: response.data!, options: []) as! [String: Any]
@@ -174,17 +156,6 @@ class PlacesList {
         
         return temp
     }
-    
-    //    func getRemoveList () -> Array<[String : Any]> {
-    ////        let temp = self.tobeRemoved
-    ////        list = list - temp
-    ////        self.tobeRemoved = []
-    ////
-    ////        return temp
-    //
-    //        // TODO
-    //    }
-    
     
 }
 
