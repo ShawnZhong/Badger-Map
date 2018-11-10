@@ -11,7 +11,7 @@ import SceneKit
 import MapKit
 
 @available(iOS 11.0, *)
-class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -39,11 +39,11 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             mapView.setRegion(viewRegion, animated: false)
         }
         
-        
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
         
+        searchBar.delegate = self
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
@@ -77,5 +77,9 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sceneLocationView.pause()
+    }
+    
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        print(searchBar.text!)
     }
 }
