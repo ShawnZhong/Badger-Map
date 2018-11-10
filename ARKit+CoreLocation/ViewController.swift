@@ -39,6 +39,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         for mapLabel in list {
             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel)
         }
+        
+        searchBar.obscuresBackgroundDuringPresentation = false;
+        definesPresentationContext = true;
     }
     
     override func viewDidLayoutSubviews() {
