@@ -38,27 +38,11 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     var updatePlaceTimer : Timer?
     
-    var adjustNorthByTappingSidesOfScreen = false
     
     var currLocation : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    var placesList : PlacesList = PlacesList()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        infoLabel.font = UIFont.systemFont(ofSize: 10)
-//        infoLabel.textAlignment = .left
-//        infoLabel.textColor = UIColor.white
-//        infoLabel.numberOfLines = 0
- //       sceneLocationView.addSubview(infoLabel)
-        
-//        updateInfoLabelTimer = Timer.scheduledTimer(
-//            timeInterval: 0.1,
-//            target: self,
-//            selector: #selector(ViewController.updateInfoLabel),
-//            userInfo: nil,
-//            repeats: true)
         
         updatePlaceTimer = Timer.scheduledTimer(
             timeInterval: 1,
@@ -314,7 +298,6 @@ class MapLabel{
         let ctx: CGContext = UIGraphicsGetCurrentContext()!
         ctx.setFillColor(gray:1, alpha: 1)
         
-        
         ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
         ctx.closePath()
         ctx.fillPath()
@@ -334,5 +317,32 @@ class MapLabel{
         
         return result!
     }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x:0, y:0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+
     
 }
