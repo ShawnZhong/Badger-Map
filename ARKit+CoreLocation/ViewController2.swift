@@ -15,6 +15,8 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
+    
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
     
@@ -48,6 +50,8 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(searchBar)
+        view.addSubview(tableView)
+        tableView.isHidden = true;
         
         var list : Array<LocationAnnotationNode> = Array()
         list.append(MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405).getNode())
@@ -82,4 +86,9 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print(searchBar.text!)
     }
+    
+    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
+        tableView.isHidden = false;
+    }
+    
 }
