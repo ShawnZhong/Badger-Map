@@ -20,9 +20,11 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     
     var filteredList : Array<MapLabel> = []
 
+    @IBOutlet weak var resetBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+    
     
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
@@ -60,12 +62,28 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isHidden = true
+        
+        resetBtn.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        resetBtn.insertSubview(blurView, at: 0)
+        
+       
+        
+        NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: resetBtn.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: resetBtn.widthAnchor),
+            ])
+        
+        blurView.layer.cornerRadius = 25.0;
+        resetBtn.layer.cornerRadius = 25.0;
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(searchBar)
         view.addSubview(tableView)
+        view.addSubview(resetBtn)
     }
     
     func updateView(){
