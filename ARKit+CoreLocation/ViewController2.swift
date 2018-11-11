@@ -54,6 +54,10 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             self.locationManager.startUpdatingLocation()
         }
         
+        for mapLabel in list {
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
+        }
+        
         searchBar.delegate = self
         
         tableView.dataSource = self
