@@ -15,11 +15,13 @@ class MapLabel{
     let latitude:CLLocationDegrees
     let longitude:CLLocationDegrees
     let node: LocationAnnotationNode
+    let info: NSString
     
-    public init(name: NSString, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
+    public init(name: NSString, latitude: CLLocationDegrees, longitude: CLLocationDegrees, info:NSString){
         self.name =  name;
         self.latitude = latitude;
         self.longitude = longitude;
+        self.info = info;
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: CLLocationDistance(Int.random(in: 240 ..< 320)))
@@ -54,7 +56,6 @@ class MapLabel{
             NSAttributedString.Key.paragraphStyle:text_style,
             NSAttributedString.Key.foregroundColor:text_color
         ]
-        
         
         let text_rect_name = CGRect(
             x: 0,

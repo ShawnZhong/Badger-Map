@@ -14,19 +14,19 @@ import MapKit
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate{
     
     let list: Array<MapLabel> = [
-        MapLabel(name: "Chadbourne", latitude: 43.073676, longitude: -89.400900),
-        MapLabel(name: "Bascom", latitude: 43.075357, longitude: -89.404098),
-        MapLabel(name: "Van Vleck", latitude: 43.074830, longitude: -89.404665),
-        MapLabel(name: "Engineering", latitude: 43.071780, longitude: -89.410150),
-        MapLabel(name: "Regent", latitude: 43.067998, longitude: -89.409786),
-        MapLabel(name: "Lucky", latitude: 43.072898, longitude: -89.398432),
-        MapLabel(name: "Computer Sciences", latitude: 43.071467, longitude: -89.406842),
-        MapLabel(name: "Chazen", latitude: 43.073877, longitude: -89.398433),
-        MapLabel(name: "College Library", latitude: 43.076746, longitude: -89.401241),
-        MapLabel(name: "Dejope", latitude: 43.077607, longitude: -89.417774),
-        MapLabel(name: "University Hospital", latitude: 43.076614, longitude: -89.431305),
-        MapLabel(name: "Natatorium", latitude: 43.076869, longitude: -89.420439),
-        MapLabel(name: "Randall Stadium", latitude: 43.069920, longitude: -89.412576),
+        MapLabel(name: "Chadbourne", latitude: 43.073676, longitude: -89.400900, info: "Chadbourne Residence Hall is a popular option for both first-year and non-freshman residents, offering updated amenities and lots of gathering space. Home to the Chadbourne Residential College (a learning community sponsored by the College of Letters & Science and University Housing), Chadbourne offers a great blend of academic and residential life to all who live here."),
+        MapLabel(name: "Bascom", latitude: 43.075357, longitude: -89.404098, info: "Bascom Hill is the main quadrangle that forms the symbolic core of the University of Wisconsin–Madison campus. It is located on the opposite end of State Street from the Wisconsin State Capitol, and is named after John Bascom, former president of the University of Wisconsin. The hill itself is a drumlin,[2] formed by glacial deposits about 18,000 years ago."),
+        MapLabel(name: "Van Vleck", latitude: 43.074830, longitude: -89.404665, info: "Department of mathematics. It was picked as the most ugliest hall in some surveys. "),
+        MapLabel(name: "Engineering", latitude: 43.071780, longitude: -89.410150, info: "Headquarter of nerds sponsored by Foxconn"),
+        MapLabel(name: "Regent", latitude: 43.067998, longitude: -89.409786, info: "The Regent Apartments offer a 24-hour desk, friendly staff, a flat utility fee that includes 50 Mbps Internet, an iMac and PC computer station, game room, outdoor sports courts, fire pit and grill station, private and group study rooms, free Fitness On Demand, a gym room, and more."),
+        MapLabel(name: "Lucky", latitude: 43.072898, longitude: -89.398432, info: "Lucky sets the standard for hassle-free campus living. As Madison’s skyline fills in, we’re still the only owner who understands that the luxury high-rise lifestyle isn’t just about amenities and looks; it’s also about the way the residents and the building are treated – with respect, dignity, and care."),
+        MapLabel(name: "Computer Sciences", latitude: 43.071467, longitude: -89.406842, info: "In any case, bugs are prohibited here. "),
+        MapLabel(name: "Chazen", latitude: 43.073877, longitude: -89.398433, info: "The Chazen is home to the second-largest collection of art in Wisconsin: more than 20,000 works include paintings, sculpture, drawings, prints, photographs, and decorative arts. The permanent collection covers diverse historical periods, cultures, and geographic locations, from ancient Greece, Western Europe, and the Soviet Empire, to Moghul India, eighteenth-century Japan, and modern Africa. The collection continues to grow thanks to artwork donations and purchases."),
+        MapLabel(name: "College Library", latitude: 43.076746, longitude: -89.401241, info: "A good place for self study and group study with great view and diversy resources. "),
+        MapLabel(name: "Dejope", latitude: 43.077607, longitude: -89.417774, info: "Having opened in 2012, Dejope Residence Hall is one of the Division of University Housing’s newest residence halls. Dejope is home to a mix of first-year and non-freshman residents, as well as the Four Lakes Market (one of six dining markets on campus), classroom space, on-site academic advising, a Technology Learning Center (TLC), and the satellite office to University Health Services (UHS). This new building features carpeted resident rooms with air conditioning and spacious walk-in closets."),
+        MapLabel(name: "University Hospital", latitude: 43.076614, longitude: -89.431305, info: "With each visit to a UW Health clinic, we strive to exceed your expectations. You are welcome to contact the clinic manager if you would like personal assistance with any issue. Simply call the scheduling number for the clinic you visited and ask for the clinic manager. If you would care to Submit a Compliment, Concern or Complaint in a more formal manner, please contact Patient Relations."),
+        MapLabel(name: "Natatorium", latitude: 43.076869, longitude: -89.420439, info: "Enjoy a workout or a swim at the historic Natatorium, located right along the Lakeshore Path."),
+        MapLabel(name: "Randall Stadium", latitude: 43.069920, longitude: -89.412576, info: "Camp Randall Stadium is an outdoor stadium. It has been the home of Wisconsin Badgers football since 1895, with a fully functioning stadium since 1917. The oldest and fifth largest stadium in the Big Ten Conference, Camp Randall is the 41st largest stadium in the world, with a seating capacity of 80,321."),
     ]
     
     var filteredList : Array<MapLabel> = []
@@ -34,12 +34,16 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var infoView: UITextView!
+    
     
     var button: UIButton!
     var updateUserLocationTimer: Timer?
     
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
+    
+    let listener = UIViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,11 +83,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         tableView.delegate = self
         tableView.isHidden = true
         
+        //infoView
+        infoView.layer.cornerRadius = 25.0;
         
         view.addSubview(sceneLocationView)  
         view.addSubview(mapView)
         view.addSubview(tableView)
         view.addSubview(searchBar)
+        view.addSubview(infoView)
         
         
         self.button = UIButton()
@@ -116,10 +123,54 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        if let eulerAngles = sceneLocationView.currentEulerAngles() {
-            print("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
+//        if let eulerAngles = sceneLocationView.currentEulerAngles() {
+//            print("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
+//        }
+        if let touch = touches.first {
+            if touch.view != nil {
+                if (mapView == touch.view! ||
+                    mapView.recursiveSubviews().contains(touch.view!)) {
+//                    centerMapOnUserLocation = false
+                } else {
+                    let sceneView = self.sceneLocationView
+                    let location = touch.location(in: sceneView)
+                    let hitTest = sceneView.hitTest(location)
+                    
+                    if (!hitTest.isEmpty) {
+                        let results = hitTest.first!
+                        let currentNode = results.node
+                        if let locationNode = getLocationNode(node: currentNode) {
+                            for label in list{
+                                if(label.node == locationNode){
+                                    infoView.text = (label.name as String) + "\r\n" + (label.info as String);
+                                    infoView.isHidden = false;
+                                    print(label.name)
+                                    return
+                                }
+                            }
+//                            var cur:LocationAnnotationNode = locationNode
+//                            DDLogDebug("")
+//                            DDLogDebug("title: \(locationNode.titlePlace!)")
+//                            let distance = locationNode.location.distance(from: sceneView.currentLocation()!)
+//                            DDLogDebug("distance: \(distance)")
+                        }
+                    }else if(!infoView.isHidden){
+                        infoView.isHidden = true;
+                        print("test")
+                    }
+                }
+            }
         }
      }
+    
+    func getLocationNode(node: SCNNode) -> LocationAnnotationNode? {
+        if node.isKind(of: LocationNode.self) {
+            return node as? LocationAnnotationNode
+        } else if let parentNode = node.parent {
+            return getLocationNode(node: parentNode)
+        }
+        return nil
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -192,5 +243,17 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             self.sceneLocationView.removeLocationNode(locationNode: label.node);
         }
         self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: list[indexPath.row].node)
+    }
+}
+
+extension UIView {
+    func recursiveSubviews() -> [UIView] {
+        var recursiveSubviews = self.subviews
+        
+        for subview in subviews {
+            recursiveSubviews.append(contentsOf: subview.recursiveSubviews())
+        }
+        
+        return recursiveSubviews
     }
 }
