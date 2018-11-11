@@ -99,7 +99,6 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        print(searchBar.text!)
         tableView.isHidden = true
         sceneLocationView.isHidden = false
         searchBar.endEditing(true)
@@ -138,7 +137,11 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        tableView.isHidden = true;
+        tableView.isHidden = true
+        sceneLocationView.isHidden = false
+        searchBar.endEditing(true)
+        searchBar.searchBarStyle = UISearchBar.Style.minimal
+        
         for label in list{
             self.sceneLocationView.removeLocationNode(locationNode: label.node);
         }
