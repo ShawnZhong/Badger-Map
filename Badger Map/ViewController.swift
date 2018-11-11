@@ -14,8 +14,13 @@ import MapKit
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate{
     
     let list: Array<MapLabel> = [
-        MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405),
-        MapLabel(name: "Chad", latitude: 43.073676, longitude: -89.400900)
+        MapLabel(name: "Chadbourne", latitude: 43.073676, longitude: -89.400900),
+        MapLabel(name: "Bascom", latitude: 43.075357, longitude: -89.404098),
+        MapLabel(name: "Van Vleck", latitude: 43.074830, longitude: -89.404665),
+        MapLabel(name: "Engineering", latitude: 43.071780, longitude: -89.410150),
+        MapLabel(name: "Regent", latitude: 43.067998, longitude: -89.409786),
+        MapLabel(name: "Lucky", latitude: 43.072898, longitude: -89.398432),
+        MapLabel(name: "Computer Science", latitude: 43.071467, longitude: -89.406842),
     ]
     
     var filteredList : Array<MapLabel> = []

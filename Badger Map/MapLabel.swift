@@ -23,7 +23,7 @@ class MapLabel{
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
-        self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 750))
+        self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 1000))
         node.scaleRelativeToDistance = true
     }
     
@@ -37,21 +37,13 @@ class MapLabel{
         UIGraphicsBeginImageContext(size)
         
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        let ctx = UIGraphicsGetCurrentContext()!
         
-        ctx.setFillColor(red: 1, green: 0, blue: 0, alpha: 1)
         ctx.setFillColor(gray:1, alpha: 1)
-        ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
-        ctx.closePath()
+        ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: size.height / 4 ).cgPath)
         ctx.fillPath()
-        ctx.setStrokeColor(red: 0, green: 0, blue: 0, alpha: 1)
-        ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
-        ctx.closePath()
-        ctx.strokePath()
         
         //vertically center (depending on font)
-        //text attributes
-        
         let text_style=NSMutableParagraphStyle()
         text_style.alignment=NSTextAlignment.center
         
