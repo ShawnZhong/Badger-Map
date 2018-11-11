@@ -128,4 +128,9 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         cell.textLabel?.text = filteredList[indexPath.row].name as String
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        print(list[indexPath.row].name)
+        tableView.isHidden = true;
+    }
 }
