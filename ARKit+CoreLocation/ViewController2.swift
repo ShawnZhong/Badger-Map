@@ -54,9 +54,7 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             self.locationManager.startUpdatingLocation()
         }
         
-        for mapLabel in list {
-            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
-        }
+        updateView();
         
         searchBar.delegate = self
         
@@ -68,6 +66,14 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         view.addSubview(mapView)
         view.addSubview(searchBar)
         view.addSubview(tableView)
+    }
+    
+    func updateView(){
+        for mapLabel in list {
+            if(mapLabel.isShown){
+                self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -131,8 +137,11 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(filteredList[indexPath.row].name)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.isHidden = true;
+        for label in list{
+            self.sceneLocationView.removeLocationNode(locationNode: label.node);
+        }
+        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: list[indexPath.row].getNode())
     }
-    
 }

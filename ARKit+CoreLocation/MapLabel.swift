@@ -15,6 +15,7 @@ class MapLabel{
     let latitude:CLLocationDegrees
     let longitude:CLLocationDegrees
     let node: LocationAnnotationNode
+    var isShown = true;
     
     public init(name: NSString, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
         self.name =  name;
@@ -44,6 +45,7 @@ class MapLabel{
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         let ctx: CGContext = UIGraphicsGetCurrentContext()!
         
+        ctx.setFillColor(red: 1, green: 0, blue: 0, alpha: 1)
         ctx.setFillColor(gray:1, alpha: 1)
         ctx.addPath(UIBezierPath(roundedRect: rect, cornerRadius: 10).cgPath)
         ctx.closePath()
@@ -80,5 +82,13 @@ class MapLabel{
         let result=UIGraphicsGetImageFromCurrentImageContext()
         
         return result!
+    }
+    
+    func show(){
+        isShown = true;
+    }
+    
+    func hide(){
+        isShown = false;
     }
 }
