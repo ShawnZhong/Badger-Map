@@ -20,17 +20,17 @@
 		49A3FC031F09BADB00AA59C8 /* FloatingPoint+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FC021F09BADB00AA59C8 /* FloatingPoint+Radians.swift */; };
 		49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */; };
 		49D206F31F124BDD00D7D622 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */; };
-		6707044121978CCB00334E18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6707044021978CCB00334E18 /* Main.storyboard */; };
-		6707044621978E7400334E18 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707044421978E7400334E18 /* ViewController2.swift */; };
-		6707044721978E7400334E18 /* ViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6707044521978E7400334E18 /* ViewController2.xib */; };
+		6707044621978E7400334E18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707044421978E7400334E18 /* ViewController.swift */; };
 		670704492197905B00334E18 /* MapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670704482197905B00334E18 /* MapLabel.swift */; };
+		67E214152197D5FD0025BE14 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67E214142197D5FD0025BE14 /* ViewController.xib */; };
+		67E214182197D6590025BE14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67E214162197D6590025BE14 /* Main.storyboard */; };
 		D8C205D11F5B197200675E6E /* NotSupportedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
 		49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
-		49A3FBD81F09988100AA59C8 /* ARKit+CoreLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ARKit+CoreLocation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49A3FBD81F09988100AA59C8 /* Badger Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Badger Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49A3FBE41F09988100AA59C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49A3FBE71F09988100AA59C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -43,10 +43,10 @@
 		49A3FC021F09BADB00AA59C8 /* FloatingPoint+Radians.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Radians.swift"; sourceTree = "<group>"; };
 		49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
-		6707044021978CCB00334E18 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		6707044421978E7400334E18 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
-		6707044521978E7400334E18 /* ViewController2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController2.xib; sourceTree = "<group>"; };
+		6707044421978E7400334E18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		670704482197905B00334E18 /* MapLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLabel.swift; sourceTree = "<group>"; };
+		67E214142197D5FD0025BE14 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		67E214172197D6590025BE14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSupportedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +64,7 @@
 		49A3FBCF1F09988100AA59C8 = {
 			isa = PBXGroup;
 			children = (
-				49A3FBDA1F09988100AA59C8 /* ARKit+CoreLocation */,
+				49A3FBDA1F09988100AA59C8 /* Badger Map */,
 				49A3FBD91F09988100AA59C8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,26 +72,26 @@
 		49A3FBD91F09988100AA59C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49A3FBD81F09988100AA59C8 /* ARKit+CoreLocation.app */,
+				49A3FBD81F09988100AA59C8 /* Badger Map.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49A3FBDA1F09988100AA59C8 /* ARKit+CoreLocation */ = {
+		49A3FBDA1F09988100AA59C8 /* Badger Map */ = {
 			isa = PBXGroup;
 			children = (
 				49A3FBF31F099A4A00AA59C8 /* Source */,
 				49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */,
-				6707044021978CCB00334E18 /* Main.storyboard */,
-				D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */,
+				6707044421978E7400334E18 /* ViewController.swift */,
+				67E214142197D5FD0025BE14 /* ViewController.xib */,
+				670704482197905B00334E18 /* MapLabel.swift */,
 				49A3FBE41F09988100AA59C8 /* Assets.xcassets */,
 				49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */,
+				67E214162197D6590025BE14 /* Main.storyboard */,
+				D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */,
 				49A3FBE91F09988100AA59C8 /* Info.plist */,
-				6707044421978E7400334E18 /* ViewController2.swift */,
-				6707044521978E7400334E18 /* ViewController2.xib */,
-				670704482197905B00334E18 /* MapLabel.swift */,
 			);
-			path = "ARKit+CoreLocation";
+			path = "Badger Map";
 			sourceTree = "<group>";
 		};
 		49A3FBF31F099A4A00AA59C8 /* Source */ = {
@@ -114,9 +114,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		49A3FBD71F09988100AA59C8 /* ARKit+CoreLocation */ = {
+		49A3FBD71F09988100AA59C8 /* Badger Map */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49A3FBEC1F09988100AA59C8 /* Build configuration list for PBXNativeTarget "ARKit+CoreLocation" */;
+			buildConfigurationList = 49A3FBEC1F09988100AA59C8 /* Build configuration list for PBXNativeTarget "Badger Map" */;
 			buildPhases = (
 				49A3FBD41F09988100AA59C8 /* Sources */,
 				49A3FBD51F09988100AA59C8 /* Frameworks */,
@@ -126,9 +126,9 @@
 			);
 			dependencies = (
 			);
-			name = "ARKit+CoreLocation";
+			name = "Badger Map";
 			productName = "ARKit+CoreLocation";
-			productReference = 49A3FBD81F09988100AA59C8 /* ARKit+CoreLocation.app */;
+			productReference = 49A3FBD81F09988100AA59C8 /* Badger Map.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -148,7 +148,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 49A3FBD31F09988100AA59C8 /* Build configuration list for PBXProject "ARKit+CoreLocation" */;
+			buildConfigurationList = 49A3FBD31F09988100AA59C8 /* Build configuration list for PBXProject "Badger Map" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -161,7 +161,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				49A3FBD71F09988100AA59C8 /* ARKit+CoreLocation */,
+				49A3FBD71F09988100AA59C8 /* Badger Map */,
 			);
 		};
 /* End PBXProject section */
@@ -171,10 +171,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6707044121978CCB00334E18 /* Main.storyboard in Resources */,
-				6707044721978E7400334E18 /* ViewController2.xib in Resources */,
 				49A3FBE81F09988100AA59C8 /* LaunchScreen.storyboard in Resources */,
+				67E214152197D5FD0025BE14 /* ViewController.xib in Resources */,
 				49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */,
+				67E214182197D6590025BE14 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +192,7 @@
 				49A3FBFF1F09B1D200AA59C8 /* LocationNode.swift in Sources */,
 				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
 				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
-				6707044621978E7400334E18 /* ViewController2.swift in Sources */,
+				6707044621978E7400334E18 /* ViewController.swift in Sources */,
 				4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */,
 				49A3FC011F09B9CF00AA59C8 /* SceneLocationEstimate.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
@@ -211,6 +211,14 @@
 				49A3FBE71F09988100AA59C8 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		67E214162197D6590025BE14 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				67E214172197D6590025BE14 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -334,7 +342,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54H9FG6Y68;
-				INFOPLIST_FILE = "ARKit+CoreLocation/Info.plist";
+				INFOPLIST_FILE = "Badger Map/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shawnzhong.ARKitCoreLocation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -351,7 +360,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 54H9FG6Y68;
-				INFOPLIST_FILE = "ARKit+CoreLocation/Info.plist";
+				INFOPLIST_FILE = "Badger Map/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shawnzhong.ARKitCoreLocation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -364,7 +374,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49A3FBD31F09988100AA59C8 /* Build configuration list for PBXProject "ARKit+CoreLocation" */ = {
+		49A3FBD31F09988100AA59C8 /* Build configuration list for PBXProject "Badger Map" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49A3FBEA1F09988100AA59C8 /* Debug */,
@@ -373,7 +383,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49A3FBEC1F09988100AA59C8 /* Build configuration list for PBXNativeTarget "ARKit+CoreLocation" */ = {
+		49A3FBEC1F09988100AA59C8 /* Build configuration list for PBXNativeTarget "Badger Map" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49A3FBED1F09988100AA59C8 /* Debug */,

@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
         
         if #available(iOS 11.0, *) {
-            let vc = ViewController2()
+            let vc = ViewController()
             self.window!.rootViewController = vc
         } else {
             self.window!.rootViewController = NotSupportedViewController() 

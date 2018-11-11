@@ -1,5 +1,5 @@
 //
-//  ViewController2.swift
+//  ViewController.swift
 //  ARKit+CoreLocation
 //
 //  Created by Shawn Zhong on 11/10/18.
@@ -11,7 +11,7 @@ import SceneKit
 import MapKit
 
 @available(iOS 11.0, *)
-class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate{
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate{
     
     let list: Array<MapLabel> = [
         MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405),
@@ -25,12 +25,15 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     
-    
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // sceneLocationView
+        initView()
+        filteredList = list
         
         // mapView
         mapView.delegate = self
@@ -52,9 +55,6 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
-        
-        
-        
         
         
         // searchBar
@@ -82,9 +82,7 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             blurView.widthAnchor.constraint(equalTo: resetBtn.widthAnchor),
             ])
         
-        // sceneLocationView
-        initView()
-        filteredList = list
+        
         
         
         view.addSubview(sceneLocationView)
@@ -93,10 +91,7 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         view.addSubview(searchBar)
         view.addSubview(resetBtn)
     }
-   
-    @IBAction func test(_ sender: Any, forEvent event: UIEvent) {
-         print("F")
-    }
+
     
     func initView(){
         for mapLabel in list {
