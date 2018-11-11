@@ -25,8 +25,8 @@ class MapLabel{
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: CLLocationDistance(Int.random(in: 240 ..< 320)))
-        self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 30))
-        node.scaleRelativeToDistance = false
+        self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 50))
+        node.scaleRelativeToDistance = true
     }
     
     static func getImage(name: NSString, size: CGFloat) -> UIImage {
