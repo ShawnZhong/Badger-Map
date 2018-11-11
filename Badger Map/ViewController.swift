@@ -20,7 +20,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         MapLabel(name: "Engineering", latitude: 43.071780, longitude: -89.410150),
         MapLabel(name: "Regent", latitude: 43.067998, longitude: -89.409786),
         MapLabel(name: "Lucky", latitude: 43.072898, longitude: -89.398432),
-        MapLabel(name: "Computer Science", latitude: 43.071467, longitude: -89.406842),
+        MapLabel(name: "Computer Sciences", latitude: 43.071467, longitude: -89.406842),
+        MapLabel(name: "Chazen", latitude: 43.073877, longitude: -89.398433),
+        MapLabel(name: "College Library", latitude: 43.076746, longitude: -89.401241),
+        MapLabel(name: "Dejope", latitude: 43.077607, longitude: -89.417774),
+        MapLabel(name: "University Hospital", latitude: 43.076614, longitude: -89.431305),
+        MapLabel(name: "Natatorium", latitude: 43.076869, longitude: -89.420439),
+        MapLabel(name: "Randall Stadium", latitude: 43.069920, longitude: -89.412576),
     ]
     
     var filteredList : Array<MapLabel> = []
@@ -30,6 +36,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     @IBOutlet weak var tableView: UITableView!
     
     var button: UIButton!
+    var updateUserLocationTimer: Timer?
     
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
@@ -40,6 +47,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         // sceneLocationView
         initView()
         filteredList = list
+        
         
         // mapView
         mapView.delegate = self
@@ -70,9 +78,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isHidden = true
-       
         
-        view.addSubview(sceneLocationView)
+        
+        view.addSubview(sceneLocationView)  
         view.addSubview(mapView)
         view.addSubview(tableView)
         view.addSubview(searchBar)
@@ -105,6 +113,13 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.node)
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if let eulerAngles = sceneLocationView.currentEulerAngles() {
+            print("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
+        }
+     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

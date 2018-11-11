@@ -22,7 +22,7 @@ class MapLabel{
         self.longitude = longitude;
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: CLLocationDistance(Int.random(in: 240 ..< 320)))
         self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 1000))
         node.scaleRelativeToDistance = true
     }
