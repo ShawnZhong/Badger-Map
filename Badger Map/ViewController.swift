@@ -25,10 +25,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     var filteredList : Array<MapLabel> = []
 
-    @IBOutlet weak var resetBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+    
+    var button: UIButton!
     
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
@@ -65,18 +66,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         // searchBar
         searchBar.delegate = self
         
-        
-        
-        
         //tableView
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isHidden = true
        
-        
-        
-
-        
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
@@ -84,22 +78,25 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         view.addSubview(searchBar)
         
         
-        
-        let button = UIButton()
-        button.frame = CGRect(
+        self.button = UIButton()
+        self.button.isHidden = true
+        self.button.layer.cornerRadius = 10.0;
+        self.button.frame = CGRect(
             x: 50,
-            y: self.view.frame.size.height - 300,
-            width: 300,
-            height: 50
+            y: self.view.frame.size.height - 200,
+            width: 75,
+            height: 45
         )
-        button.backgroundColor = UIColor.red
-        button.setTitle("Reset", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        view.addSubview(button)
+        self.button.backgroundColor = UIColor.red
+        self.button.setTitle("Reset", for: .normal)
+        self.button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+       
+        view.addSubview(self.button)
     }
 
     
     @objc func buttonAction(sender: UIButton!) {
+        self.button.isHidden = true
         initView()
     }
     
@@ -171,6 +168,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         tableView.isHidden = true
+        self.button.isHidden = false
         sceneLocationView.isHidden = false
         searchBar.endEditing(true)
         searchBar.searchBarStyle = UISearchBar.Style.minimal
