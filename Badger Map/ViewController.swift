@@ -70,41 +70,35 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
        
         
         
-        // resetBtn
-        resetBtn.backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: .light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        resetBtn.insertSubview(blurView, at: 0)
-        
-        NSLayoutConstraint.activate([
-            blurView.heightAnchor.constraint(equalTo: resetBtn.heightAnchor),
-            blurView.widthAnchor.constraint(equalTo: resetBtn.widthAnchor),
-            ])
+
         
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(tableView)
         view.addSubview(searchBar)
-        view.addSubview(resetBtn)
+        
         
         
         let button = UIButton()
-        button.frame = CGRect(x: self.view.frame.size.width - 60, y: 60, width: 50, height: 50)
+        button.frame = CGRect(
+            x: 50,
+            y: self.view.frame.size.height - 300,
+            width: 300,
+            height: 50
+        )
         button.backgroundColor = UIColor.red
-        button.setTitle("Name your Button ", for: .normal)
+        button.setTitle("Reset", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         view.addSubview(button)
     }
 
     
     @objc func buttonAction(sender: UIButton!) {
-        print("Button tapped")
+        initView()
     }
     
     func initView(){
-        print("called")
         for mapLabel in list {
             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.node)
         }
