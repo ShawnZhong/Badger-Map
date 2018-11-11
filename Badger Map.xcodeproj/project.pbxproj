@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		326E599A219880B400E7FC01 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326E5999219880B400E7FC01 /* Arrow.swift */; };
 		4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */; };
 		49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */; };
 		49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		326E5999219880B400E7FC01 /* Arrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
 		4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
 		49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		49A3FBD81F09988100AA59C8 /* Badger Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Badger Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				67E214162197D6590025BE14 /* Main.storyboard */,
 				D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */,
 				49A3FBE91F09988100AA59C8 /* Info.plist */,
+				326E5999219880B400E7FC01 /* Arrow.swift */,
 			);
 			path = "Badger Map";
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
 				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
 				6707044621978E7400334E18 /* ViewController.swift in Sources */,
+				326E599A219880B400E7FC01 /* Arrow.swift in Sources */,
 				4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */,
 				49A3FC011F09B9CF00AA59C8 /* SceneLocationEstimate.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,

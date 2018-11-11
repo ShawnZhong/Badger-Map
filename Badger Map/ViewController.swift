@@ -29,6 +29,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         MapLabel(name: "Randall Stadium", latitude: 43.069920, longitude: -89.412576, info: "Camp Randall Stadium is an outdoor stadium. It has been the home of Wisconsin Badgers football since 1895, with a fully functioning stadium since 1917. The oldest and fifth largest stadium in the Big Ten Conference, Camp Randall is the 41st largest stadium in the world, with a seating capacity of 80,321."),
     ]
     
+    var arrows: Array<Arrow> = []
     var filteredList : Array<MapLabel> = []
 
     @IBOutlet weak var searchBar: UISearchBar!
@@ -39,6 +40,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     var button: UIButton!
     var updateUserLocationTimer: Timer?
+    var curLat: CLLocationDegrees = 0.0
+    var curLong: CLLocationDegrees = 0.0
     
     let sceneLocationView = SceneLocationView()
     let locationManager = CLLocationManager()
@@ -112,6 +115,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     @objc func buttonAction(sender: UIButton!) {
         self.button.isHidden = true
+        self.mapView.removeOverlays(self.mapView.overlays)
         initView()
     }
     
@@ -197,6 +201,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         tableView.isHidden = true
         sceneLocationView.isHidden = false
+        searchBar.text = ""
         searchBar.endEditing(true)
         searchBar.searchBarStyle = UISearchBar.Style.minimal
     }
@@ -238,11 +243,46 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         sceneLocationView.isHidden = false
         searchBar.endEditing(true)
         searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchBar.text = ""
         
         for label in list{
             self.sceneLocationView.removeLocationNode(locationNode: label.node);
         }
-        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: list[indexPath.row].node)
+        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: filteredList[indexPath.row].node)
+        
+        self.mapView.removeOverlays(self.mapView.overlays)
+        directionRequest(mapLabel: filteredList[indexPath.row])
+    }
+    
+    func directionRequest(mapLabel: MapLabel){
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: curLat, longitude: curLong), addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: mapLabel.latitude, longitude: mapLabel.longitude), addressDictionary: nil))
+        request.requestsAlternateRoutes = true
+        request.transportType = .walking
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { [unowned self] response, error in
+            guard let unwrappedResponse = response else { return }
+            
+            for route in unwrappedResponse.routes {
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        curLat = locValue.latitude
+        curLong = locValue.longitude
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        renderer.strokeColor = UIColor.blue
+        return renderer
     }
 }
 
