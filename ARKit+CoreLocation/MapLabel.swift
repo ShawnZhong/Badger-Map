@@ -15,7 +15,6 @@ class MapLabel{
     let latitude:CLLocationDegrees
     let longitude:CLLocationDegrees
     let node: LocationAnnotationNode
-    var isShown = true;
     
     public init(name: NSString, latitude: CLLocationDegrees, longitude: CLLocationDegrees){
         self.name =  name;
@@ -26,11 +25,6 @@ class MapLabel{
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 266)
         self.node = LocationAnnotationNode(location: pinLocation, image: MapLabel.getImage(name: name, size: 750))
         node.scaleRelativeToDistance = true
-    }
-    
-    
-    func getNode() -> LocationAnnotationNode{
-        return self.node
     }
     
     static func getImage(name: NSString, size: CGFloat) -> UIImage {
@@ -82,13 +76,5 @@ class MapLabel{
         let result=UIGraphicsGetImageFromCurrentImageContext()
         
         return result!
-    }
-    
-    func show(){
-        isShown = true;
-    }
-    
-    func hide(){
-        isShown = false;
     }
 }

@@ -32,21 +32,18 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        filteredList = list
-        
+        // mapView
         mapView.delegate = self
         mapView.layer.cornerRadius = 25.0;
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
-        // Check for Location Services
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
         }
-        
-        //Zoom to user location
+    
         if let userLocation = locationManager.location?.coordinate {
             let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 200, longitudinalMeters: 200)
             mapView.setRegion(viewRegion, animated: false)
@@ -56,41 +53,54 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
             self.locationManager.startUpdatingLocation()
         }
         
-        updateView();
         
+        
+        
+        
+        // searchBar
         searchBar.delegate = self
         
+        
+        
+        
+        //tableView
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.isHidden = true
+       
         
+        
+        // resetBtn
         resetBtn.backgroundColor = .clear
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.translatesAutoresizingMaskIntoConstraints = false
         resetBtn.insertSubview(blurView, at: 0)
         
-       
-        
         NSLayoutConstraint.activate([
             blurView.heightAnchor.constraint(equalTo: resetBtn.heightAnchor),
             blurView.widthAnchor.constraint(equalTo: resetBtn.widthAnchor),
             ])
         
-        blurView.layer.cornerRadius = 25.0;
-        resetBtn.layer.cornerRadius = 25.0;
+        // sceneLocationView
+        initView()
+        filteredList = list
+        
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
-        view.addSubview(searchBar)
         view.addSubview(tableView)
+        view.addSubview(searchBar)
         view.addSubview(resetBtn)
     }
+   
+    @IBAction func test(_ sender: Any, forEvent event: UIEvent) {
+         print("F")
+    }
     
-    func updateView(){
+    func initView(){
         for mapLabel in list {
-            if(mapLabel.isShown){
-                self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.getNode())
-            }
+            self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.node)
         }
     }
     
@@ -163,6 +173,6 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         for label in list{
             self.sceneLocationView.removeLocationNode(locationNode: label.node);
         }
-        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: list[indexPath.row].getNode())
+        self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: list[indexPath.row].node)
     }
 }
