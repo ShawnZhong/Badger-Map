@@ -83,17 +83,28 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             ])
         
         
-        
-        
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
         view.addSubview(tableView)
         view.addSubview(searchBar)
         view.addSubview(resetBtn)
+        
+        
+        let button = UIButton()
+        button.frame = CGRect(x: self.view.frame.size.width - 60, y: 60, width: 50, height: 50)
+        button.backgroundColor = UIColor.red
+        button.setTitle("Name your Button ", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        view.addSubview(button)
     }
 
     
+    @objc func buttonAction(sender: UIButton!) {
+        print("Button tapped")
+    }
+    
     func initView(){
+        print("called")
         for mapLabel in list {
             self.sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: mapLabel.node)
         }
