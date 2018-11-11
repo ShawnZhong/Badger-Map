@@ -29,7 +29,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         MapLabel(name: "Randall Stadium", latitude: 43.069920, longitude: -89.412576, info: "Camp Randall Stadium is an outdoor stadium. It has been the home of Wisconsin Badgers football since 1895, with a fully functioning stadium since 1917. The oldest and fifth largest stadium in the Big Ten Conference, Camp Randall is the 41st largest stadium in the world, with a seating capacity of 80,321."),
     ]
     
-    var arrows: Array<Arrow> = []
+//    var arrows: Array<Arrow> = []
     var filteredList : Array<MapLabel> = []
 
     @IBOutlet weak var searchBar: UISearchBar!
