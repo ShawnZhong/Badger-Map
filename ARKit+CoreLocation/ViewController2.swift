@@ -11,7 +11,7 @@ import SceneKit
 import MapKit
 
 @available(iOS 11.0, *)
-class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource {
+class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate{
     
     let list: Array<MapLabel> = [
         MapLabel(name: "GC", latitude: 43.072433, longitude: -89.403405),
@@ -61,7 +61,8 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         searchBar.delegate = self
         
         tableView.dataSource = self
-        tableView.isHidden = true;
+        tableView.delegate = self
+        tableView.isHidden = true
         
         view.addSubview(sceneLocationView)
         view.addSubview(mapView)
@@ -129,8 +130,9 @@ class ViewController2: UIViewController, MKMapViewDelegate, CLLocationManagerDel
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-        print(list[indexPath.row].name)
-        tableView.isHidden = true;
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(filteredList[indexPath.row].name)
     }
+    
 }
